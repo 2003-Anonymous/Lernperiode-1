@@ -12,7 +12,7 @@ Da wir noch nicht viel mit C# gearbeitet haben, möchte ich, um meine Fähigkeit
 - [ ] Eine Umgebung für das spätere Eingabefeld des Codes erstellen.
 - [ ] Ein Eingabefeld für den Code programmieren.
 
-Heute habe ich meinen Code verbessert und hinzugefügt, dass man den Code ändern kann. Das war ziehmlich kompliziert und ich habe noch nicht ganz verstanden, wie man die Registry benutzt. Man kann jetzt den Code ändern.
+Heute habe ich meinen Code verbessert und hinzugefügt, dass man den Code ändern kann. Das war ziehmlich kompliziert und ich habe noch nicht ganz verstanden, wie man die Registry benutzt. Man kann jetzt den Code ändern und er wird dauerhaft gespeichert.
 
 ## 06.9.2024
 
