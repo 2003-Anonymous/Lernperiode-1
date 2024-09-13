@@ -16,18 +16,28 @@ Heute habe ich meinen Code verbessert und hinzugefügt, dass man den Code änder
 
 ## 06.9.2024
 
-- [ ] Meinen Code nochmals überarbeiten.
-- [ ] Meinen Code verstehen.
+- [x] Meinen Code nochmals überarbeiten.
+- [x] Meinen Code verstehen.
 - [ ] Verwendung von der Registry nochmals üben.
-- [ ] Den Code eventuel noch verbessern (Farben etc.)
+- [x] Den Code eventuel noch verbessern (Farben etc.)
 
 Heute habe ich habe Farben hinzugefügt, wenn man den Code falsch eingibt. Ausserdem kann man jetzt den aktuellen Zugangscode abfragen, falls man ihn vergisst. Die Registry habe ich heute noch nicht angeschaut. Ich habe versucht, eine Textdatei mit dem Code zu verknüpfen, was aber nicht funktioniert hat, obwohl es keine Fehlermeldung anzeigt. Den Fehler habe ich noch nicht gefunden.
 
 ## 13.9.2024
 
-- [ ] Den Fehler finden und ihn beheben.
-- [ ] Ein Ziel hinzufügen, wenn man den richtigen Code eingibt
-- [ ] Hinzufügen, dass man in der Textdatei neue Einträge machen kann
+- [x] Den Fehler finden und ihn beheben.
+- [x] Ein Ziel hinzufügen, wenn man den richtigen Code eingibt
+- [x] Hinzufügen, dass man in der Textdatei neue Einträge machen kann
 - [ ] Die Registry anschauen und verstehen.
 - [ ] Sternchenanzeige bei Codeeingabe.
-- [ ] Registry-Einträge auf Textdatei ändern.
+- [x] Registry-Einträge auf Textdatei ändern.
+
+Heute habe ich ein Textdokument mit meinem Programm verknüpft, in welchem das Passwort gespeichert ist. Dann habe ich noch ein zweites Textdokument verknüpft. Der Inhalt dieses Dokuments wirt angezeigt, wenn man das richtige Passwort eingibt. Anschliessend kann man noch neue Einträge machen. Dafür musste ich deaktivieren, dass mit der Enter-Taste das Programm beendet wird. Nun kann man das Programm mit "END" stoppen,
+
+## 20.9.2025
+
+- [ ] Das Bearbeiten des Txt-Dokuments verbessern --> bessere Formatierung
+- [ ] Das Ziel noch eirweitern --> grösserer Eintrag
+- [ ] Sternchenzeichen bei Codeeingabe
+
+
