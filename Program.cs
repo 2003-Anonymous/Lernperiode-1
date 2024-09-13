@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Diagnostics;
 using System.Reflection.PortableExecutable;
+using System.Text;
 using Microsoft.Win32;
 
 namespace Anmeldefeld_LP1
@@ -12,23 +13,30 @@ namespace Anmeldefeld_LP1
 
             Console.ResetColor();
 
-            string registryPath = @"Software\Anmeldefeld_LP1";
-            string keyName = "Code";
+            string filePath = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Daten_Verknüpfung-Alternative.txt";
+            string filePath2 = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Verknüpfung2.txt";
+
             int defaultCode = 77;
 
-
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, true) ??
-                              Registry.CurrentUser.CreateSubKey(registryPath);
-
-            if (key == null)
+            int savedCode = defaultCode;
+            if (File.Exists(filePath))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error");
-                return;
-            }
+                try
+                {
+                    string codeFromFile = File.ReadAllText(filePath).Trim();
 
-            object code2 = key.GetValue(keyName);
-            int savedCode = code2 != null ? Convert.ToInt32(code2) : defaultCode;
+                    if (!string.IsNullOrEmpty(codeFromFile))
+                    {
+                        savedCode = Convert.ToInt32(codeFromFile);
+                    }
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Error");
+                    return;
+                }
+            }
 
             Console.Write("Enter Username: ");
             string username = Console.ReadLine();
@@ -41,9 +49,18 @@ namespace Anmeldefeld_LP1
                     Console.Write("Enter new code: ");
                     if (int.TryParse(Console.ReadLine(), out int newCode))
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        key.SetValue(keyName, newCode);
-                        Console.WriteLine("Code changed successfully");
+                        try
+                        {
+
+                            File.WriteAllText(filePath, newCode.ToString());
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Code changed successfully");
+                        }
+                        catch
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Error");
+                        }
                     }
                     else
                     {
@@ -59,28 +76,28 @@ namespace Anmeldefeld_LP1
             }
             else if (username == "Joshua")
             {
-                try
+                Console.Write("Enter Code: ");
+                if (int.TryParse(Console.ReadLine(), out int code) && code == savedCode)
                 {
-                    Console.Write("Enter Code: ");
-                    if (int.TryParse(Console.ReadLine(), out int code) && code == savedCode)
-                    {
-                        if (File.Exists("Verknüpfung.txt"))
-                        {
-                            string content = File.ReadAllText("Verknüpfung.txt");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine($"Code correct\n{content}");
-                        }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Code correct\n{File.ReadAllText(filePath2)}");
 
-                    }
-                    else
+                    StringBuilder inputText = new StringBuilder();                   
+
+                    string line;
+                    while ((line = Console.ReadLine()) != "END")  // 'END' beendet die Eingabe
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Code incorrect");
+                        inputText.AppendLine(line);
                     }
+
+                    File.AppendAllText(filePath2, inputText.ToString() + Environment.NewLine);
+                    Console.WriteLine("Eintrag wurde hinzugefügt.");
                 }
-                catch
+
+                else
                 {
-                    Console.WriteLine("Error");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Code incorrect");
                 }
 
             }
@@ -91,13 +108,128 @@ namespace Anmeldefeld_LP1
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Acess denied");
+                Console.WriteLine("Access denied");
             }
-
-            key.Close();
         }
     }
 }
 
+/*using System;
+using System.IO;
 
+namespace Anmeldefeld_LP1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.ResetColor();
 
+            // Datei-Pfad definieren
+            string filePath = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Daten_Verknüpfung-Alternative.txt";
+            int defaultCode = 77; // Standard-Code
+
+            // Gespeicherten Code initialisieren
+            int savedCode = defaultCode;
+
+            // Überprüfen, ob die Datei existiert und die erste Zeile einlesen
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    // using stellt sicher, dass der Stream nach dem Lesen freigegeben wird
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        string firstLine = reader.ReadLine()?.Trim(); // Nur die erste Zeile einlesen
+                        if (!string.IsNullOrEmpty(firstLine))
+                        {
+                            savedCode = Convert.ToInt32(firstLine);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Fehler beim Lesen des Codes: {ex.Message}");
+                    return;
+                }
+            }
+
+            Console.Write("Enter Username: ");
+            string username = Console.ReadLine();
+
+            if (username == "changecode")
+            {
+                Console.Write("Enter old code: ");
+                if (int.TryParse(Console.ReadLine(), out int code) && code == savedCode)
+                {
+                    Console.Write("Enter new code: ");
+                    if (int.TryParse(Console.ReadLine(), out int newCode))
+                    {
+                        try
+                        {
+                            // using stellt sicher, dass der Stream nach dem Schreiben geschlossen wird
+                            using (StreamWriter writer = new StreamWriter(filePath, false)) // false: Datei wird überschrieben
+                            {
+                                writer.WriteLine(newCode.ToString());
+                            }
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Code changed successfully");
+
+                            // Debug-Ausgabe zur Bestätigung des neuen Codes
+                            string testRead = File.ReadLines(filePath).FirstOrDefault()?.Trim();
+                            if (testRead == newCode.ToString())
+                            {
+                                Console.WriteLine("Der neue Code wurde korrekt gespeichert.");
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Fehler beim Überprüfen des neuen Codes.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid new code");
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid old code");
+                }
+            }
+            else if (username == "Joshua")
+            {
+                Console.Write("Enter Code: ");
+                if (int.TryParse(Console.ReadLine(), out int code) && code == savedCode)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Code correct\n{savedCode}");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Code incorrect");
+                }
+            }
+            else if (username == "showCode")
+            {
+                Console.Write($"Your code is {savedCode}");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Access denied");
+            }
+        }
+    }
+}*/
