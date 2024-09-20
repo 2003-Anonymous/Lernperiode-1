@@ -38,6 +38,6 @@ Heute habe ich ein Textdokument mit meinem Programm verknüpft, in welchem das P
 
 - [ ] Das Bearbeiten des Txt-Dokuments verbessern --> bessere Formatierung
 - [ ] Das Ziel noch eirweitern --> grösserer Eintrag
-- [ ] Sternchenzeichen bei Codeeingabe
+- [x] Sternchenzeichen bei Codeeingabe
 
 
