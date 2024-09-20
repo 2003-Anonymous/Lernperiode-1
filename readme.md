@@ -53,6 +53,4 @@ https://github.com/user-attachments/assets/fe918d96-f621-49c5-a176-ba9b7b1b1bff
 
 ## Reflexion
 
-
-
-
+Ich bin seht zufrieden mit meinem Ergebnis. Es funktioniert alles und mit der Zeit hat es gut ausgereicht. Ich musste meinen Code mehrmals überarbeiten, da ich neue Funktionen hinzugefügt habe. Wiederholungen gab es bei mir bei diesem Projekt nicht. Ich habe viele neue und verschiedene Dinge gelernt und ausprobiert. Ich habe wahrscheindlich nicht immer die übersichtilichsten und effektivsten Methoden gewählt aber es waren die einfachsten Methoden, welche ich finden konnte. Ich hätte noch mehr mit Funktionen arbeiten können. Das hätte den Code auch übersichtlicher gemacht aber ich habe Funktionen erst diese Woche gelern und da wäre es zu viel Arbeit gewesen, diese noch einzubauen.
