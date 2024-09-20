@@ -40,6 +40,10 @@ Heute habe ich ein Textdokument mit meinem Programm verknüpft, in welchem das P
 - [ ] Das Ziel noch eirweitern --> grösserer Eintrag
 - [x] Sternchenzeichen bei Codeeingabe
 
-#### Halo
+Heute habe ich mein Projekt beendet. Ich habe hinzugefügt, dass bei der Eingabe des Codes nur Sternchen angezeigt werden und dass man den Benutzernamen ändern kann.
+
+## Beschreibung Projekt
+
+Ich ein Anmelefeld erstellt. Man kann seinen Benutzernamen eingeben und bei richtiger Eingabe kann man das Passwort eingeben. Ist das auch richtig, wird ein Text angezeigt, den man auch bearbeiten und speichern kann. Den Benutzernamen und das Passwort kann man ändern (changecode,changeuser) und es wird dauerhaft in einem Textdokument gespeichert. Zuerst gibt man den alten Code ein, wenn dieser richtig ist, kann man den neuen Code eingeben. Ist der alte und der neue Code richtig, wird diese Nachricht angezeigt: "Are you Stupid?" Ist das Dokument leer, werden die Standartanmeldedaten verwendet. Wenn man das Passwort vergessen hat, kann man "shcowCode" eingeben und das aktuelle Passwort wird angezeigt.
 
 
