@@ -13,9 +13,9 @@ namespace Anmeldefeld_LP1
 
             Console.ResetColor();
 
-            string filePath = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Password.txt";
-            string filePath2 = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Inhalt.txt";
-            string filePath3 = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Benutzername.txt";
+            string passwordFile = @"C:\Users\joshu\source\repos\Lernatelier\Alternative\Password.txt";
+            string entryFile = @"C:\\Users\\joshu\\source\\repos\\Lernatelier\\Alternative\\Inhalt.txt";
+            string usernameFile = @"C:\\Users\\joshu\\source\\repos\\Lernatelier\\Alternative\\Benutzername.txt";
 
             string defaultUser = "Joshua";
 
@@ -27,11 +27,11 @@ namespace Anmeldefeld_LP1
 
             string user = "";
 
-            if (File.Exists(filePath))
+            if (File.Exists(passwordFile))
             {
                 try
                 {
-                    string codeFromFile = File.ReadAllText(filePath).Trim();
+                    string codeFromFile = File.ReadAllText(passwordFile).Trim();
 
                     if (!string.IsNullOrEmpty(codeFromFile))
                     {
@@ -49,11 +49,11 @@ namespace Anmeldefeld_LP1
             Console.Write("Enter Username: ");
             string username = Console.ReadLine();
 
-            if (File.Exists(filePath3))
+            if (File.Exists(usernameFile))
             {
                 try
                 {
-                    string userFromFile = File.ReadAllText(filePath3).Trim();
+                    string userFromFile = File.ReadAllText(usernameFile).Trim();
 
                     if (!string.IsNullOrEmpty(userFromFile))
                     {
@@ -69,86 +69,11 @@ namespace Anmeldefeld_LP1
             }
             if (username == "changecode")
             {
-                Console.Write("Enter old code: ");
-                string oldPassword = ReadPassword();
-
-                if (int.TryParse(oldPassword, out int code) && code == savedCode)
-                {
-                    Console.Write("\nEnter new code: ");
-                    string newPassword = ReadPassword();
-
-                    if (newPassword == oldPassword)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n\nAre you stupid?");
-
-                        return;
-                    }
-
-                    if (int.TryParse(newPassword, out int newCode))
-                    {
-                        try
-                        {
-
-                            File.WriteAllText(filePath, newCode.ToString());
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("\n\nCode changed successfully");
-                        }
-                        catch
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Error");
-                        }
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Invalid new code");
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid old code");
-                }
+                ChangePassword(savedCode, passwordFile);
             }
             else if (username == "changeuser")
             {
-                Console.Write("Enter old Username: ");
-                string oldUser = Console.ReadLine();
-                
-                if (oldUser == savedUser)
-                {
-                    Console.Write("\nEnter new username: ");
-                    string newUser = Console.ReadLine();
-
-                   
-                    if (newUser == oldUser)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n\nAre you stupid? You entered the same username.");
-                        return;
-                    }
-
-                    
-                    try
-                    {
-                        File.WriteAllText(filePath3, newUser); 
-                        savedUser = newUser; 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\n\nUsername changed successfully");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"Error saving the new username: {ex.Message}");
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid old username");
-                }
+                ChangeUser(savedUser, usernameFile);
             }
             else if (username == savedUser)
             {
@@ -158,7 +83,7 @@ namespace Anmeldefeld_LP1
                 if (int.TryParse(password, out int code) && code == savedCode)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\n\nCode correct\n\n{File.ReadAllText(filePath2)}");
+                    Console.WriteLine($"\n\nCode correct\n\n{File.ReadAllText(entryFile)}");
 
                     StringBuilder inputText = new StringBuilder();
 
@@ -168,14 +93,14 @@ namespace Anmeldefeld_LP1
                         inputText.AppendLine(line);
                     }
 
-                    File.AppendAllText(filePath2, inputText.ToString() + Environment.NewLine);
-                    Console.WriteLine("Eintrag wurde hinzugefügt.");
+                    File.AppendAllText(entryFile, inputText.ToString() + Environment.NewLine);
+                    Console.WriteLine("Entry was added successfully.");
                 }
 
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Code incorrect");
+                    Console.WriteLine("\nCode incorrect");
                 }
 
             }
@@ -213,5 +138,92 @@ namespace Anmeldefeld_LP1
 
             return password;
         }
+
+        static void ChangePassword(int savedCode, string passwordFile)
+        {
+            Console.Write("Enter old code: ");
+            string oldPassword = ReadPassword();
+
+            if (int.TryParse(oldPassword, out int code) && code == savedCode)
+            {
+                Console.Write("\nEnter new code: ");
+                string newPassword = ReadPassword();
+
+                if (newPassword == oldPassword)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n\nAre you stupid?");
+
+                    return;
+                }
+
+                if (int.TryParse(newPassword, out int newCode))
+                {
+                    try
+                    {
+
+                        File.WriteAllText(passwordFile, newCode.ToString());
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("\n\nCode changed successfully");
+                    }
+                    catch
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Error");
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid new code");
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid old code");
+            }
+        }
+
+        static void ChangeUser(string savedUser, string usernameFile)
+        {
+            Console.Write("Enter old Username: ");
+            string oldUser = Console.ReadLine();
+
+            if (oldUser == savedUser)
+            {
+                Console.Write("\nEnter new username: ");
+                string newUser = Console.ReadLine();
+
+
+                if (newUser == oldUser)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n\nAre you stupid? You entered the same username.");
+                    return;
+                }
+
+
+                try
+                {
+                    File.WriteAllText(usernameFile, newUser);
+                    savedUser = newUser;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n\nUsername changed successfully");
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Error saving the new username: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid old username");
+            }
+        }
+
+
     }
 }
